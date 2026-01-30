@@ -444,14 +444,20 @@
       gap: 1.5rem;
     }
 
+    .zones-grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     @media (max-width: 1024px) {
-      .zones-grid {
+      .zones-grid,
+      .zones-grid-3 {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 600px) {
-      .zones-grid {
+      .zones-grid,
+      .zones-grid-3 {
         grid-template-columns: 1fr;
       }
     }
@@ -2201,61 +2207,48 @@
   <section class="zones">
     <div class="zones-inner">
       <div class="section-header">
-        <span class="section-label">Strategia lokalizacji</span>
-        <h2 class="section-title">Każdy ekran ma swoją misję</h2>
-        <p class="section-desc">Nie sprzedajemy świecących prostokątów. Projektujemy ścieżkę zakupową klienta — od wejścia do kasy.</p>
+        <span class="section-label">Kiedy ekran działa najlepiej</span>
+        <h2 class="section-title">Złap uwagę, gdy nie ma ucieczki</h2>
+        <p class="section-desc">Twoi klienci siedzą. Czekają. Nudzą się. Nie scrollują telefonu, bo go schowali. To idealny moment na Twój przekaz.</p>
       </div>
       
-      <div class="zones-grid">
-        <div class="zone-card fade-in">
-          <div class="zone-header">
-            <span class="zone-icon">🪟</span>
-            <h3>Witryna</h3>
-          </div>
-          <div class="zone-goal">Cel: Przyciągnąć z ulicy</div>
-          <ul class="zone-examples">
-            <li>Promocje błyskawiczne</li>
-            <li>Efekty „przed/po"</li>
-            <li>Dynamiczne ceny</li>
-          </ul>
-        </div>
-        
+      <div class="zones-grid zones-grid-3">
         <div class="zone-card fade-in">
           <div class="zone-header">
             <span class="zone-icon">🛋️</span>
             <h3>Poczekalnia</h3>
           </div>
-          <div class="zone-goal">Cel: Zająć uwagę, zainspirować</div>
+          <div class="zone-goal">10-30 minut czystej uwagi</div>
           <ul class="zone-examples">
-            <li>Menu zabiegów/usług</li>
-            <li>Porady ekspertów</li>
-            <li>Social media feed</li>
+            <li>Klient czeka na wizytę — i patrzy</li>
+            <li>Edukacja o usługach i nowościach</li>
+            <li>Inspiracje „a może jeszcze to..."</li>
           </ul>
         </div>
         
         <div class="zone-card fade-in">
           <div class="zone-header">
-            <span class="zone-icon">💇</span>
-            <h3>Stanowisko</h3>
+            <span class="zone-icon">💆</span>
+            <h3>Przy zabiegu</h3>
           </div>
-          <div class="zone-goal">Cel: Sprzedać więcej (upsell)</div>
+          <div class="zone-goal">Klient leży — i nie odejdzie</div>
           <ul class="zone-examples">
-            <li>Produkty komplementarne</li>
-            <li>Programy lojalnościowe</li>
-            <li>Nowości w ofercie</li>
+            <li>Relaksujące treści + subtelna promocja</li>
+            <li>Idealny moment na upsell</li>
+            <li>Produkty do pielęgnacji domowej</li>
           </ul>
         </div>
         
         <div class="zone-card fade-in">
           <div class="zone-header">
-            <span class="zone-icon">💳</span>
-            <h3>Kasa</h3>
+            <span class="zone-icon">⏳</span>
+            <h3>Między zabiegami</h3>
           </div>
-          <div class="zone-goal">Cel: Zatrzymać i przyciągnąć</div>
+          <div class="zone-goal">Czas oczekiwania = Twój czas</div>
           <ul class="zone-examples">
-            <li>Rezerwacja kolejnej wizyty</li>
-            <li>Oferty „last minute"</li>
-            <li>Produkty impulsowe</li>
+            <li>Angażująca treść skraca postrzegany czas</li>
+            <li>Mniej narzekań na czekanie</li>
+            <li>Programy lojalnościowe i nowości</li>
           </ul>
         </div>
       </div>
