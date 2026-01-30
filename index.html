@@ -1,0 +1,2666 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Molab Screens — Ekrany, które sprzedają</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Molab Brand Colors */
+      --molab-yellow: #f3b823;
+      --molab-charcoal: #292929;
+      --molab-red: #d7571f;
+      --molab-blue: #1580c2;
+      --molab-white: #ffffff;
+      
+      /* Light Theme */
+      --bg-dark: #ffffff;
+      --bg-card: #f5f5f5;
+      --bg-elevated: #ebebeb;
+      --text-primary: #292929;
+      --text-secondary: #555555;
+      --text-muted: #888888;
+      --accent-1: #f3b823;
+      --accent-2: #d7571f;
+      --accent-gradient: linear-gradient(135deg, #f3b823 0%, #d7571f 100%);
+      --glow-primary: rgba(243, 184, 35, 0.3);
+      --glow-secondary: rgba(215, 87, 31, 0.2);
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --font-main: 'Poppins', -apple-system, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-gradient::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(243, 184, 35, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(215, 87, 31, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(25, 128, 194, 0.03) 0%, transparent 60%);
+      animation: bgFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes bgFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(2%, 2%) rotate(1deg); }
+      66% { transform: translate(-1%, 1%) rotate(-1deg); }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .logo-img {
+      height: 22px;
+      width: auto;
+    }
+
+    .logo-screens {
+      color: var(--text-primary);
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1;
+      padding-bottom: 1px;
+    }
+
+    .nav-cta {
+      padding: 0.75rem 1.75rem;
+      background: var(--accent-gradient);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px var(--glow-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent-1);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero h1 .highlight {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px var(--glow-primary);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-elevated);
+      border-color: var(--text-muted);
+    }
+
+    /* Screen mockup in hero */
+    .hero-visual {
+      margin-top: 5rem;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 1s ease 1s forwards;
+    }
+
+    .screen-mockup {
+      width: min(800px, 90vw);
+      height: auto;
+      aspect-ratio: 16/10;
+      background: #1a1a2e;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 50px 100px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+    }
+
+    .screen-content {
+      position: absolute;
+      inset: 12px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .screen-promo {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .screen-promo .promo-badge {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .screen-promo h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    .screen-promo p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .screen-glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: var(--accent-gradient);
+      filter: blur(100px);
+      opacity: 0.3;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      padding: 2rem;
+      margin-top: -2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.2s forwards;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Science Section */
+    .science {
+      background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 50%, #ffffff 100%);
+      max-width: none;
+      position: relative;
+    }
+
+    .science-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .science-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .science-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .science-card:hover {
+      border-color: var(--accent-1);
+      transform: translateY(-5px);
+    }
+
+    .science-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .science-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .science-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .science-source {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* Zones Section */
+    .zones {
+      background: #f5f5f5;
+      max-width: none;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .zones-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .zones-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .zones-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .zone-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .zone-card:hover {
+      border-color: var(--accent-1);
+      transform: translateY(-5px);
+    }
+
+    .zone-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .zone-icon {
+      font-size: 1.5rem;
+    }
+
+    .zone-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .zone-goal {
+      font-size: 0.85rem;
+      color: var(--accent-1);
+      font-weight: 500;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .zone-examples {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .zone-examples li {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      padding: 0.4rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .zone-examples li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    /* Sections */
+    section {
+      padding: 8rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 5rem;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-desc {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    /* Problems Section */
+    .problems {
+      background: #f5f5f5;
+      max-width: none;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .problems-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .problems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .problem-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 2.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .problem-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 107, 53, 0.3);
+    }
+
+    .problem-card:hover::before {
+      opacity: 1;
+    }
+
+    .problem-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .problem-card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .problem-card p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* Solution Section */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .solution-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .solution-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .solution-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .solution-card:hover {
+      background: var(--bg-elevated);
+      transform: translateY(-5px);
+    }
+
+    .solution-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--accent-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 4px 15px rgba(243, 184, 35, 0.3);
+    }
+
+    .solution-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .solution-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* How it works */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .step {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      border-color: var(--accent-1);
+      background: var(--bg-elevated);
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-content p {
+      color: var(--text-secondary);
+    }
+
+    /* Strategy Section */
+    .strategy {
+      background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 50%, #ffffff 100%);
+      max-width: none;
+      position: relative;
+    }
+
+    .strategy::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-1), var(--accent-2), transparent);
+    }
+
+    .strategy-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .strategy-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .strategy-timeline::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--border-subtle);
+    }
+
+    @media (max-width: 900px) {
+      .strategy-timeline {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .strategy-timeline::before {
+        display: none;
+      }
+    }
+
+    .strategy-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .strategy-icon {
+      width: 80px;
+      height: 80px;
+      background: #ffffff;
+      border: 2px solid var(--accent-1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .strategy-step h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .strategy-step p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Pricing Section */
+    .pricing {
+      padding: 8rem 2rem;
+    }
+
+    .pricing-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pricing-step-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-1);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .pricing-step-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .pricing-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .pricing-options-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 1100px) {
+      .pricing-options-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .pricing-options,
+      .pricing-options-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pricing-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--molab-charcoal);
+      margin: 0.5rem 0;
+      line-height: 1.2;
+    }
+
+    .pricing-price span {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      vertical-align: middle;
+    }
+
+    .pricing-price .pricing-price-wrapper {
+      font-size: inherit;
+      font-weight: inherit;
+      color: inherit;
+    }
+
+    .pricing-option {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-option:hover,
+    .pricing-option.selected {
+      border-color: var(--accent-1);
+      background: var(--bg-elevated);
+    }
+
+    .pricing-option.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 28px;
+      height: 28px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .pricing-option-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .pricing-option h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-option p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .pricing-option p {
+      flex-grow: 1;
+    }
+
+    /* Modern horizontal TV/screen icon */
+    .screen-icon-vertical {
+      display: inline-block;
+      width: 48px;
+      height: 32px;
+      background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+      border-radius: 3px;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .screen-icon-vertical::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background: linear-gradient(135deg, #1e90ff 0%, #00d4aa 100%);
+      border-radius: 2px;
+    }
+
+    .screen-icon-vertical::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 6px;
+      background: linear-gradient(180deg, #333 0%, #222 100%);
+      border-radius: 0 0 3px 3px;
+    }
+
+    .pricing-option .tag {
+      display: inline-block;
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* Price tooltip */
+    .pricing-price-wrapper {
+      position: relative;
+      display: inline;
+    }
+
+    .price-info {
+      cursor: help;
+      font-size: 0.85rem !important;
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
+      margin-left: 0.3rem;
+      vertical-align: middle;
+    }
+
+    .price-info:hover {
+      opacity: 1;
+    }
+
+    .price-tooltip {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--molab-charcoal);
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.8rem !important;
+      font-weight: 400;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      z-index: 10;
+      text-align: left;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .price-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--molab-charcoal);
+    }
+
+    .price-tooltip ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .price-tooltip li {
+      padding: 0.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ffffff !important;
+      font-size: 0.8rem !important;
+    }
+
+    .price-tooltip li::before {
+      content: '✓';
+      color: var(--molab-yellow);
+      font-size: 0.7rem;
+    }
+
+    .price-info:hover + .price-tooltip,
+    .price-tooltip:hover {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 768px) {
+      .price-tooltip {
+        white-space: normal;
+        min-width: 180px;
+        left: 0;
+        transform: translateX(0);
+      }
+      .price-tooltip::after {
+        left: 20px;
+      }
+    }
+
+    .pricing-option.featured {
+      /* Badge tylko, bez podświetlenia - dopiero po kliknięciu */
+    }
+
+    .pricing-option.featured.selected {
+      border-color: var(--accent-1);
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(247, 192, 53, 0.05) 100%);
+    }
+
+    .pricing-option.featured .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-gradient);
+      color: #ffffff;
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Pricing Calculator Result */
+    .pricing-result {
+      max-width: 500px;
+      margin: 3rem auto 0;
+      background: #ffffff;
+      border: 2px solid var(--molab-yellow);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(243, 184, 35, 0.2);
+      animation: fadeUp 0.4s ease;
+    }
+
+    .pricing-result-inner {
+      text-align: center;
+    }
+
+    .pricing-result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 1.1rem;
+    }
+
+    .pricing-result-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--molab-charcoal);
+    }
+
+    .pricing-result-total strong {
+      color: var(--molab-red);
+    }
+
+    .pricing-result-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background: #f5f5f5;
+      max-width: none;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .testimonials-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .testimonial::before {
+      content: '"';
+      font-family: Georgia, serif;
+      font-size: 6rem;
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.3;
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .testimonial-name {
+      font-weight: 600;
+    }
+
+    .testimonial-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.5rem 0;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s ease;
+    }
+
+    .faq-question:hover {
+      color: var(--accent-1);
+    }
+
+    .faq-icon {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+
+    .faq-answer p {
+      padding-bottom: 1.5rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      text-align: center;
+      padding: 10rem 2rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--molab-charcoal);
+      color: #ffffff;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: var(--accent-gradient);
+      filter: blur(150px);
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+      position: relative;
+      color: #ffffff;
+    }
+
+    .final-cta p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .final-cta .btn {
+      position: relative;
+    }
+
+    /* Footer */
+    footer {
+      background: #f5f5f5;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-logo-img {
+      height: 22px;
+      width: auto;
+    }
+
+    .footer-screens {
+      color: var(--molab-charcoal);
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1;
+      padding-bottom: 1px;
+    }
+
+    .footer-links {
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--molab-red);
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Contact Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    .modal-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--molab-charcoal);
+    }
+
+    .modal-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="tel"] {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: var(--font-main);
+      transition: all 0.2s ease;
+      background: var(--bg-card);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--molab-yellow);
+      box-shadow: 0 0 0 3px rgba(243, 184, 35, 0.15);
+    }
+
+    .checkbox-group {
+      margin-top: 1.5rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      display: none;
+    }
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 2px solid var(--border-subtle);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      margin-top: 1px;
+    }
+
+    .checkbox-label input:checked + .checkmark {
+      background: var(--accent-gradient);
+      border-color: var(--molab-yellow);
+    }
+
+    .checkbox-label input:checked + .checkmark::after {
+      content: '✓';
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .btn-full {
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+
+    .form-success {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #ffffff;
+      margin: 0 auto 1rem;
+    }
+
+    .form-success h4 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--molab-charcoal);
+    }
+
+    .form-success p {
+      color: var(--text-secondary);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      section {
+        padding: 3.5rem 1.25rem;
+      }
+
+      .hero {
+        padding: 6rem 1.25rem 2rem;
+        min-height: auto;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .hero-sub {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .hero-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .hero-ctas .btn {
+        width: 100%;
+        padding: 0.9rem 1.5rem;
+      }
+
+      .hero-visual {
+        margin-top: 3rem;
+      }
+
+      /* Stats bar - 2x2 grid */
+      .stats-bar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+        margin-top: -1rem;
+      }
+
+      .stat-item {
+        padding: 0.75rem;
+        background: var(--bg-card);
+        border-radius: 12px;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+      }
+
+      /* Section headers */
+      .section-header {
+        margin-bottom: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+      }
+
+      .section-desc {
+        font-size: 0.95rem;
+      }
+
+      .section-label {
+        font-size: 0.7rem;
+      }
+
+      /* Problem cards */
+      .problems-grid {
+        gap: 1rem;
+      }
+
+      .problem-card {
+        padding: 1.5rem;
+      }
+
+      .problem-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .problem-card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .problem-card p {
+        font-size: 0.9rem;
+      }
+
+      /* Solution cards - 2 column */
+      .solution-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .solution-card {
+        padding: 1.25rem;
+      }
+
+      .solution-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+
+      .solution-card h3 {
+        font-size: 1rem;
+      }
+
+      .solution-card p {
+        font-size: 0.8rem;
+      }
+
+      /* Science cards - 2 column compact */
+      .science-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+
+      .science-card {
+        padding: 1.25rem 1rem;
+      }
+
+      .science-number {
+        font-size: 1.8rem;
+      }
+
+      .science-card h3 {
+        font-size: 0.9rem;
+      }
+
+      .science-card p {
+        font-size: 0.75rem;
+        display: none; /* Hide description on mobile */
+      }
+
+      .science-source {
+        display: none; /* Hide source on mobile */
+      }
+
+      /* Steps */
+      .step {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+        gap: 1rem;
+      }
+
+      .step-number {
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+      }
+
+      .step-content h3 {
+        font-size: 1.1rem;
+      }
+
+      .step-content p {
+        font-size: 0.9rem;
+      }
+
+      /* Strategy timeline */
+      .strategy-timeline {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .strategy-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .strategy-step h3 {
+        font-size: 0.95rem;
+      }
+
+      .strategy-step p {
+        font-size: 0.8rem;
+      }
+
+      /* Zones - horizontal scroll */
+      .zones-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .zone-card {
+        flex: 0 0 280px;
+        scroll-snap-align: start;
+        padding: 1.5rem;
+      }
+
+      .zone-card h3 {
+        font-size: 1.1rem;
+      }
+
+      /* Pricing */
+      .pricing-step-label {
+        font-size: 0.7rem;
+      }
+
+      .pricing-options,
+      .pricing-options-4 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+
+      .pricing-option {
+        padding: 1.25rem 1rem;
+      }
+
+      .pricing-option-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .pricing-option h3 {
+        font-size: 1rem;
+      }
+
+      .pricing-price {
+        font-size: 1.3rem;
+        margin: 0.25rem 0;
+      }
+
+      .pricing-price span {
+        font-size: 0.7rem;
+      }
+
+      .pricing-option p {
+        font-size: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .pricing-option .tag {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.6rem;
+      }
+
+      .pricing-option.featured .badge {
+        font-size: 0.6rem;
+        padding: 0.2rem 0.6rem;
+      }
+
+      /* Testimonials */
+      .testimonials-grid {
+        gap: 1rem;
+      }
+
+      .testimonial {
+        padding: 1.5rem;
+      }
+
+      .testimonial::before {
+        font-size: 4rem;
+        top: 0.5rem;
+        right: 1rem;
+      }
+
+      .testimonial-text {
+        font-size: 0.95rem;
+      }
+
+      /* FAQ */
+      .faq-question {
+        font-size: 1rem;
+        padding: 1.25rem 0;
+      }
+
+      .faq-answer p {
+        font-size: 0.9rem;
+      }
+
+      /* Final CTA */
+      .final-cta {
+        padding: 5rem 1.5rem;
+      }
+
+      .final-cta h2 {
+        font-size: 1.8rem;
+      }
+
+      .final-cta p {
+        font-size: 1rem;
+      }
+
+      /* Footer */
+      footer {
+        padding: 2rem 1.5rem;
+      }
+
+      .footer-brand {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 400px) {
+      .solution-grid,
+      .science-grid,
+      .strategy-timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-options,
+      .pricing-options-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      <img src="molab-logo.svg" alt="Molab" class="logo-img">
+      <span class="logo-screens">screens</span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      Średnio +27% sprzedaży produktów na ekranie
+    </div>
+    
+    <h1>
+      Sprzedawaj więcej<br>
+      <span class="highlight">bez mówienia słowa</span>
+    </h1>
+    
+    <p class="hero-sub">
+      Ekran w Twoim lokalu, który pokazuje ofertę każdemu klientowi. Zmiana treści w 5 minut, nie w 5 dni.
+    </p>
+    
+    <div class="hero-ctas">
+      <a href="#how" class="btn btn-primary">Pokaż mi, jak to działa</a>
+      <a href="#pricing" class="btn btn-secondary">Zobacz opcje</a>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="screen-mockup">
+        <div class="screen-glow"></div>
+        <div class="screen-content">
+          <video autoplay loop muted playsinline class="hero-video">
+            <source src="hero-video.mp4?v=5" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number">+33%</div>
+        <div class="stat-label">wzrost sprzedaży</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2×</div>
+        <div class="stat-label">więcej spojrzeń niż plakat</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">83%</div>
+        <div class="stat-label">zapamiętywalność treści</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">-35%</div>
+        <div class="stat-label">odczuwanego czasu oczekiwania</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problems -->
+  <section class="problems">
+    <div class="problems-inner">
+      <div class="section-header">
+        <span class="section-label">Znasz to?</span>
+        <h2 class="section-title">Codzienne wyzwania, które kosztują Cię pieniądze</h2>
+      </div>
+      
+      <div class="problems-grid">
+        <div class="problem-card fade-in">
+          <div class="problem-icon">📉</div>
+          <h3>Marże spadają o 2-3% rocznie</h3>
+          <p>Koszty rosną, ceny trudno podnieść. Musisz sprzedawać więcej tym samym klientom — ale jak?</p>
+        </div>
+        
+        <div class="problem-card fade-in">
+          <div class="problem-icon">🤐</div>
+          <h3>8 na 10 klientów nie słyszy o promocji</h3>
+          <p>Pracownik zapomniał powiedzieć. Albo nie chciał być nachalny. Oferta dnia? Nikt o niej nie wie.</p>
+        </div>
+        
+        <div class="problem-card fade-in">
+          <div class="problem-icon">🐌</div>
+          <h3>Plakat za 5-7 dni. Promocja dziś.</h3>
+          <p>Zanim drukarnia wyśle materiały, okazja mija. Konkurencja reaguje szybciej.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section class="solution">
+    <div class="section-header">
+      <span class="section-label">Rozwiązanie</span>
+      <h2 class="section-title">Ekran, który sprzedaje za Twój zespół</h2>
+      <p class="section-desc">Twoja oferta zawsze na widoku. Aktualna. Przekonująca. Bez wysiłku.</p>
+    </div>
+    
+    <div class="solution-grid">
+      <div class="solution-card fade-in">
+        <div class="solution-icon">⚡</div>
+        <h3>Zmiana w 5 minut</h3>
+        <p>Nowa promocja o 9:00? O 9:05 jest na ekranie. Bez drukarni, bez czekania.</p>
+      </div>
+      
+      <div class="solution-card fade-in">
+        <div class="solution-icon">🎯</div>
+        <h3>Inna oferta co godzinę</h3>
+        <p>Śniadania rano, lunch w południe, happy hour wieczorem. Automatycznie.</p>
+      </div>
+      
+      <div class="solution-card fade-in">
+        <div class="solution-icon">🧠</div>
+        <h3>Pracownik nie musi pamiętać</h3>
+        <p>Ekran pokazuje ofertę 100 razy dziennie. Bez zmęczenia, bez zapominania.</p>
+      </div>
+      
+      <div class="solution-card fade-in">
+        <div class="solution-icon">💰</div>
+        <h3>+20-30% na promowanych produktach</h3>
+        <p>Klient widzi, klient pyta, klient kupuje. Tyle.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Science / Why it works -->
+  <section class="science">
+    <div class="science-inner">
+      <div class="section-header">
+        <span class="section-label">Dlaczego to działa?</span>
+        <h2 class="section-title">To nie magia — to neurobiologia</h2>
+        <p class="section-desc">Ludzki mózg automatycznie reaguje na ruch. To odruch orientacyjny — ten sam, który chronił nas przed drapieżnikami. Ekran z dynamiczną treścią wygrywa z plakatem, bo walczy biologią, nie estetyką.</p>
+      </div>
+      
+      <div class="science-grid">
+        <div class="science-card fade-in">
+          <div class="science-number">+88%</div>
+          <h3>Dłuższy czas oglądania</h3>
+          <p>Klienci patrzą na ekrany niemal 2× dłużej niż na statyczne plakaty</p>
+          <div class="science-source">Badania eye-tracking</div>
+        </div>
+        
+        <div class="science-card fade-in">
+          <div class="science-number">+97%</div>
+          <h3>Więcej fiksacji wzroku</h3>
+          <p>Ruch przyciąga spojrzenia — to proces automatyczny, niezależny od woli</p>
+          <div class="science-source">Badania eye-tracking</div>
+        </div>
+        
+        <div class="science-card fade-in">
+          <div class="science-number">+29,5%</div>
+          <h3>Wyższa wartość paragonu</h3>
+          <p>Klient pod wpływem ekranu dokupuje produkt lub usługę</p>
+          <div class="science-source">Dane z wdrożeń retail</div>
+        </div>
+        
+        <div class="science-card fade-in">
+          <div class="science-number">10s</div>
+          <h3>Okno decyzji impulsowej</h3>
+          <p>60% decyzji zakupowych zapada w mniej niż 10 sekund</p>
+          <div class="science-source">Badania behawioralne</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how">
+    <div class="section-header">
+      <span class="section-label">Jak to działa?</span>
+      <h2 class="section-title">3 kroki do ekranu, który zarabia</h2>
+    </div>
+    
+    <div class="steps-container">
+      <div class="step fade-in">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Wybierasz ekran</h3>
+          <p>Tablet na ladę? TV na ścianę? A może masz już swój sprzęt? Dopasujemy rozwiązanie.</p>
+        </div>
+      </div>
+      
+      <div class="step fade-in">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Wybierasz obsługę</h3>
+          <p>Sam tworzysz treści lub my projektujemy wszystko za Ciebie. Ty decydujesz.</p>
+        </div>
+      </div>
+      
+      <div class="step fade-in">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Zaczynasz sprzedawać</h3>
+          <p>Ekran działa. Klienci widzą ofertę. Ty zarabiasz więcej.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strategy -->
+  <section class="strategy">
+    <div class="strategy-inner">
+      <div class="section-header">
+        <span class="section-label">Strategia na start</span>
+        <h2 class="section-title">Ekran bez planu to świecący prostokąt</h2>
+        <p class="section-desc">Dlatego zaczynamy od rozmowy. Co sprzedajesz? Komu? Kiedy? Dopiero potem projektujemy treści.</p>
+      </div>
+      
+      <div class="strategy-timeline">
+        <div class="strategy-step fade-in">
+          <div class="strategy-icon">🎯</div>
+          <h3>Wywiad strategiczny</h3>
+          <p>Poznajemy Twój biznes, klientów i cele sprzedażowe.</p>
+        </div>
+        
+        <div class="strategy-step fade-in">
+          <div class="strategy-icon">📋</div>
+          <h3>Plan komunikacji</h3>
+          <p>Ustalamy co wyświetlać i kiedy — dopasowane do Twojego rytmu.</p>
+        </div>
+        
+        <div class="strategy-step fade-in">
+          <div class="strategy-icon">🎨</div>
+          <h3>Pierwsze projekty</h3>
+          <p>Tworzymy grafiki zgodne ze strategią. Ty akceptujesz.</p>
+        </div>
+        
+        <div class="strategy-step fade-in">
+          <div class="strategy-icon">📈</div>
+          <h3>Optymalizacja</h3>
+          <p>Analizujemy co działa i ciągle poprawiamy skuteczność.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zones -->
+  <section class="zones">
+    <div class="zones-inner">
+      <div class="section-header">
+        <span class="section-label">Strategia lokalizacji</span>
+        <h2 class="section-title">Każdy ekran ma swoją misję</h2>
+        <p class="section-desc">Nie sprzedajemy świecących prostokątów. Projektujemy ścieżkę zakupową klienta — od wejścia do kasy.</p>
+      </div>
+      
+      <div class="zones-grid">
+        <div class="zone-card fade-in">
+          <div class="zone-header">
+            <span class="zone-icon">🪟</span>
+            <h3>Witryna</h3>
+          </div>
+          <div class="zone-goal">Cel: Przyciągnąć z ulicy</div>
+          <ul class="zone-examples">
+            <li>Promocje błyskawiczne</li>
+            <li>Efekty „przed/po"</li>
+            <li>Dynamiczne ceny</li>
+          </ul>
+        </div>
+        
+        <div class="zone-card fade-in">
+          <div class="zone-header">
+            <span class="zone-icon">🛋️</span>
+            <h3>Poczekalnia</h3>
+          </div>
+          <div class="zone-goal">Cel: Zająć uwagę, zainspirować</div>
+          <ul class="zone-examples">
+            <li>Menu zabiegów/usług</li>
+            <li>Porady ekspertów</li>
+            <li>Social media feed</li>
+          </ul>
+        </div>
+        
+        <div class="zone-card fade-in">
+          <div class="zone-header">
+            <span class="zone-icon">💇</span>
+            <h3>Stanowisko</h3>
+          </div>
+          <div class="zone-goal">Cel: Sprzedać więcej (upsell)</div>
+          <ul class="zone-examples">
+            <li>Produkty komplementarne</li>
+            <li>Programy lojalnościowe</li>
+            <li>Nowości w ofercie</li>
+          </ul>
+        </div>
+        
+        <div class="zone-card fade-in">
+          <div class="zone-header">
+            <span class="zone-icon">💳</span>
+            <h3>Kasa</h3>
+          </div>
+          <div class="zone-goal">Cel: Zatrzymać i przyciągnąć</div>
+          <ul class="zone-examples">
+            <li>Rezerwacja kolejnej wizyty</li>
+            <li>Oferty „last minute"</li>
+            <li>Produkty impulsowe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="section-header">
+      <span class="section-label">Cennik</span>
+      <h2 class="section-title">Dopasuj rozwiązanie do swoich potrzeb</h2>
+    </div>
+    
+    <div class="pricing-steps">
+      <!-- Step 1: Screen -->
+      <div>
+        <div class="pricing-step-label">Krok 1 — Wybierz ekran</div>
+        <div class="pricing-options" id="screen-options">
+          <div class="pricing-option" data-price="1500" data-type="screen" onclick="selectOption(this, 'screen')">
+            <div class="pricing-option-icon">📱</div>
+            <h3>Tablet</h3>
+            <div class="pricing-price">1 500 zł <span class="pricing-price-wrapper"><span class="price-info">ℹ️</span><div class="price-tooltip"><ul><li>Tablet 11 cali</li><li>Uchwyt</li><li>Smart gniazdko</li><li>Oprogramowanie</li></ul></div></span></div>
+            <p>Kompaktowy, idealny na ladę lub stolik</p>
+            <span class="tag">Kawiarnie · Salony · Recepcje</span>
+          </div>
+          
+          <div class="pricing-option" data-price="4200" data-type="screen" onclick="selectOption(this, 'screen')">
+            <div class="pricing-option-icon"><span class="screen-icon-vertical"></span></div>
+            <h3>Telewizor</h3>
+            <div class="pricing-price">4 200 zł <span class="pricing-price-wrapper"><span class="price-info">ℹ️</span><div class="price-tooltip"><ul><li>Telewizor profesjonalny 50 cali</li><li>Uchwyt</li><li>Montaż</li><li>Oprogramowanie</li></ul></div></span></div>
+            <p>Duży format, widoczny z daleka</p>
+            <span class="tag">Sklepy · Restauracje · Poczekalnie</span>
+          </div>
+          
+          <div class="pricing-option" data-price="500" data-type="screen" onclick="selectOption(this, 'screen')">
+            <div class="pricing-option-icon">🔌</div>
+            <h3>Mam swój ekran</h3>
+            <div class="pricing-price">500 zł</div>
+            <p>Podłączamy system do Twojego sprzętu</p>
+            <span class="tag">Konfiguracja + urządzenie</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Step 2: Service -->
+      <div>
+        <div class="pricing-step-label">Krok 2 — Wybierz obsługę</div>
+        <div class="pricing-options pricing-options-4" id="service-options">
+          <div class="pricing-option" data-price="150" data-type="service" onclick="selectOption(this, 'service')">
+            <div class="pricing-option-icon">🛠️</div>
+            <h3>Samodzielnie</h3>
+            <div class="pricing-price">150 zł <span>netto/mies.</span></div>
+            <p>Sam zamieszczasz i projektujesz treści</p>
+            <span class="tag">Masz grafika lub lubisz działać sam</span>
+          </div>
+          
+          <div class="pricing-option featured" data-price="500" data-type="service" onclick="selectOption(this, 'service')">
+            <span class="badge">Najpopularniejszy</span>
+            <div class="pricing-option-icon">✨</div>
+            <h3>Standard</h3>
+            <div class="pricing-price">500 zł <span>netto/mies.</span></div>
+            <p>Projektujemy do 5 grafik miesięcznie</p>
+            <span class="tag">Gotowe rozwiązanie bez stresu</span>
+          </div>
+          
+          <div class="pricing-option" data-price="1150" data-type="service" onclick="selectOption(this, 'service')">
+            <div class="pricing-option-icon">🚀</div>
+            <h3>Pro</h3>
+            <div class="pricing-price">1 150 zł <span>netto/mies.</span></div>
+            <p>Do 15 grafik + harmonogram treści</p>
+            <span class="tag">Dla aktywnych biznesów</span>
+          </div>
+          
+          <div class="pricing-option" data-price="2500" data-type="service" onclick="selectOption(this, 'service')">
+            <div class="pricing-option-icon">👑</div>
+            <h3>Premium</h3>
+            <div class="pricing-price">2 500 zł <span>netto/mies.</span></div>
+            <p>Bez limitów + strategia + dedykowany opiekun</p>
+            <span class="tag">Pełna obsługa marketingowa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Calculator Result -->
+    <div id="pricing-result" class="pricing-result" style="display: none;">
+      <div class="pricing-result-inner">
+        <div class="pricing-result-row">
+          <span>Ekran (jednorazowo):</span>
+          <strong id="screen-price">0 zł</strong>
+        </div>
+        <div class="pricing-result-row">
+          <span>Obsługa (miesięcznie):</span>
+          <strong id="service-price">0 zł</strong>
+        </div>
+        <div class="pricing-result-total">
+          <span>Razem na start:</span>
+          <strong id="total-price">0 zł</strong>
+        </div>
+        <p class="pricing-result-note">* Ceny netto. Pierwszy miesiąc obsługi wliczony w cenę startową.</p>
+        <a href="mailto:kontakt@molab.pl?subject=Molab Screens - Zamówienie" class="btn btn-primary">
+          Zamów teraz
+        </a>
+      </div>
+    </div>
+    
+    <div id="pricing-placeholder" style="text-align: center; margin-top: 3rem;">
+      <p style="color: var(--text-muted);">👆 Wybierz ekran i pakiet obsługi, aby zobaczyć wycenę</p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="testimonials-inner">
+      <div class="section-header">
+        <span class="section-label">Opinie</span>
+        <h2 class="section-title">Co mówią nasi klienci?</h2>
+      </div>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial fade-in">
+          <p class="testimonial-text">„Sprzedaż deserów skoczyła o 30% w pierwszym miesiącu. Klienci sami pytają: co dziś jest w promocji?"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MK</div>
+            <div>
+              <div class="testimonial-name">Maria Kowalska</div>
+              <div class="testimonial-role">Właścicielka kawiarni, Gdańsk</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial fade-in">
+          <p class="testimonial-text">„Wcześniej czekałem tydzień na plakaty. Teraz o 10:00 mam pomysł, o 10:15 jest na ekranie. To zmienia wszystko."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">PN</div>
+            <div>
+              <div class="testimonial-name">Piotr Nowak</div>
+              <div class="testimonial-role">Manager restauracji, Sopot</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial fade-in">
+          <p class="testimonial-text">„Przestałam liczyć na to, że dziewczyny powiedzą o nowych zabiegach. Ekran robi to 200 razy dziennie."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AW</div>
+            <div>
+              <div class="testimonial-name">Anna Wiśniewska</div>
+              <div class="testimonial-role">Salon beauty, Gdynia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Często zadawane pytania</h2>
+    </div>
+    
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Czy potrzebuję technika do instalacji?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nie. Instalacja jest prosta — podłączasz ekran do prądu i internetu. Całą konfigurację robimy zdalnie. Jeśli wolisz, możemy przyjechać i wszystko ustawić.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Jak szybko mogę zmienić treść na ekranie?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>W pakiecie DIY — natychmiast. W pakietach z obsługą — tego samego dnia roboczego. Wysyłasz nam treść rano, wieczorem jest już na ekranie.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Co jeśli mam już swój telewizor?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Świetnie! Podłączamy do niego niewielkie urządzenie (wielkości pendrive'a), które zamienia każdy ekran w inteligentny system reklamowy.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Czy to działa bez internetu?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Tak. Treści są zapisane lokalnie. Internet potrzebny jest tylko do aktualizacji. Jeśli połączenie zniknie, ekran nadal wyświetla ostatnią wersję.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Jaka jest minimalna umowa?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Zaczynamy od 3 miesięcy, żebyś mógł zobaczyć realne efekty. Potem przechodzisz na miesięczne rozliczenie bez zobowiązań.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta" id="contact">
+    <h2>5 minut. Bez zobowiązań.</h2>
+    <p>Pokażemy Ci, jak ekran może pracować w Twoim lokalu. Jeśli to nie dla Ciebie — zero problemu.</p>
+    <button class="btn btn-primary" onclick="openContactModal()">
+      Porozmawiajmy
+    </button>
+  </section>
+
+  <!-- Contact Modal -->
+  <div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      <h3>Zostaw numer — oddzwonimy</h3>
+      <p class="modal-desc">Krótka rozmowa, zero zobowiązań. Opowiemy jak ekran może działać u Ciebie.</p>
+      
+      <form id="contactForm" onsubmit="submitContactForm(event)">
+        <div class="form-group">
+          <label for="contactName">Imię</label>
+          <input type="text" id="contactName" name="name" placeholder="Jak się do Ciebie zwracać?">
+        </div>
+        
+        <div class="form-group">
+          <label for="contactPhone">Numer telefonu *</label>
+          <input type="tel" id="contactPhone" name="phone" placeholder="np. 600 123 456" required>
+        </div>
+        
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="contactConsent" name="consent" required>
+            <span class="checkmark"></span>
+            <span class="checkbox-text">Wyrażam zgodę na kontakt telefoniczny w celu przedstawienia oferty Molab Screens.</span>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-full">Zadzwońcie do mnie</button>
+      </form>
+      
+      <div id="formSuccess" class="form-success" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h4>Dzięki!</h4>
+        <p>Oddzwonimy w ciągu 24 godzin.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="molab-logo.svg" alt="Molab" class="footer-logo-img">
+        <span class="footer-screens">screens</span>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:kontakt@molab.pl">kontakt@molab.pl</a>
+      </div>
+      <p class="footer-text">© 2026 Molab. Wszystkie prawa zastrzeżone.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Pricing Calculator
+    let selectedScreen = null;
+    let selectedService = null;
+
+    function selectOption(element, type) {
+      // Remove selection from siblings
+      const parent = element.parentElement;
+      parent.querySelectorAll('.pricing-option').forEach(opt => {
+        if (opt.dataset.type === type) {
+          opt.classList.remove('selected');
+        }
+      });
+      
+      // Select this option
+      element.classList.add('selected');
+      
+      // Store selection
+      const price = parseInt(element.dataset.price) || 0;
+      if (type === 'screen') {
+        selectedScreen = price;
+      } else if (type === 'service') {
+        selectedService = price;
+      }
+      
+      // Update calculator
+      updateCalculator();
+    }
+
+    function updateCalculator() {
+      const resultDiv = document.getElementById('pricing-result');
+      const placeholderDiv = document.getElementById('pricing-placeholder');
+      
+      if (selectedScreen !== null && selectedService !== null) {
+        // Show result
+        placeholderDiv.style.display = 'none';
+        resultDiv.style.display = 'block';
+        
+        // Calculate
+        const screenPrice = selectedScreen;
+        const servicePrice = selectedService;
+        const totalStart = screenPrice + servicePrice; // Ekran + pierwszy miesiąc
+        
+        // Format prices
+        document.getElementById('screen-price').textContent = formatPrice(screenPrice);
+        document.getElementById('service-price').textContent = formatPrice(servicePrice) + '/mies.';
+        document.getElementById('total-price').textContent = formatPrice(totalStart);
+        
+        // Update email link with details
+        const emailLink = resultDiv.querySelector('a[href^="mailto"]');
+        const screenName = document.querySelector('#screen-options .pricing-option.selected h3')?.textContent || '';
+        const serviceName = document.querySelector('#service-options .pricing-option.selected h3')?.textContent || '';
+        emailLink.href = `mailto:kontakt@molab.pl?subject=Molab Screens - Zamówienie&body=Wybieram:%0A- Ekran: ${screenName} (${formatPrice(screenPrice)})%0A- Obsługa: ${serviceName} (${formatPrice(servicePrice)}/mies.)%0A%0ARazem na start: ${formatPrice(totalStart)}`;
+      } else {
+        // Show placeholder
+        placeholderDiv.style.display = 'block';
+        resultDiv.style.display = 'none';
+      }
+    }
+
+    function formatPrice(price) {
+      return price.toLocaleString('pl-PL') + ' zł';
+    }
+
+    // Contact Modal
+    function openContactModal() {
+      document.getElementById('contactModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOnOverlay(event) {
+      if (event.target === event.currentTarget) {
+        closeContactModal();
+      }
+    }
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeContactModal();
+      }
+    });
+
+    // Form submission
+    function submitContactForm(event) {
+      event.preventDefault();
+      
+      const form = document.getElementById('contactForm');
+      const name = document.getElementById('contactName').value;
+      const phone = document.getElementById('contactPhone').value;
+      const consent = document.getElementById('contactConsent').checked;
+      
+      // Validate phone (Polish format)
+      const phoneClean = phone.replace(/\s/g, '');
+      if (!/^(\+48)?[0-9]{9}$/.test(phoneClean)) {
+        alert('Proszę podać poprawny numer telefonu (9 cyfr)');
+        return;
+      }
+      
+      if (!consent) {
+        alert('Proszę wyrazić zgodę na kontakt');
+        return;
+      }
+      
+      // Send via mailto (can be replaced with Web3Forms or other service)
+      const subject = encodeURIComponent('Molab Screens - Prośba o kontakt');
+      const body = encodeURIComponent(
+        `Nowa prośba o kontakt:\n\n` +
+        `Imię: ${name || 'Nie podano'}\n` +
+        `Telefon: ${phone}\n\n` +
+        `Zgoda na kontakt: Tak`
+      );
+      
+      // Open mailto
+      window.location.href = `mailto:kontakt@molab.pl?subject=${subject}&body=${body}`;
+      
+      // Show success
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      
+      // Close after 3 seconds
+      setTimeout(() => {
+        closeContactModal();
+        // Reset form for next time
+        setTimeout(() => {
+          form.style.display = 'block';
+          form.reset();
+          document.getElementById('formSuccess').style.display = 'none';
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
