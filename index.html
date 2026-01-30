@@ -1526,6 +1526,36 @@
       font-weight: 700;
     }
 
+    /* Inline error messages */
+    .field-error {
+      display: block;
+      color: var(--molab-red);
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      padding-left: 0.25rem;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: all 0.2s ease;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .field-error.visible {
+      opacity: 1;
+      transform: translateY(0);
+      height: auto;
+      padding-top: 0.25rem;
+    }
+
+    .form-group input.has-error {
+      border-color: var(--molab-red);
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+    }
+
+    .checkbox-group.has-error .checkmark {
+      border-color: var(--molab-red);
+    }
+
     .btn-full {
       width: 100%;
       margin-top: 1.5rem;
@@ -2468,6 +2498,7 @@
         <div class="form-group">
           <label for="contactPhone">Numer telefonu *</label>
           <input type="tel" id="contactPhone" name="phone" placeholder="np. 600 123 456" required>
+          <span id="phoneError" class="field-error"></span>
         </div>
         
         <div class="form-group checkbox-group">
@@ -2476,6 +2507,7 @@
             <span class="checkmark"></span>
             <span class="checkbox-text">Wyrażam zgodę na kontakt telefoniczny w celu przedstawienia oferty Molab Screens.</span>
           </label>
+          <span id="consentError" class="field-error"></span>
         </div>
         
         <button type="submit" class="btn btn-primary btn-full">Zadzwońcie do mnie</button>
@@ -2613,26 +2645,70 @@
       }
     });
 
+    // Show/hide inline error
+    function showError(elementId, errorId, message) {
+      const input = document.getElementById(elementId);
+      const error = document.getElementById(errorId);
+      
+      if (input) {
+        input.classList.add('has-error');
+        if (input.type === 'checkbox') {
+          input.closest('.checkbox-group')?.classList.add('has-error');
+        }
+      }
+      
+      if (error) {
+        error.textContent = message;
+        error.classList.add('visible');
+      }
+    }
+
+    function clearError(elementId, errorId) {
+      const input = document.getElementById(elementId);
+      const error = document.getElementById(errorId);
+      
+      if (input) {
+        input.classList.remove('has-error');
+        if (input.type === 'checkbox') {
+          input.closest('.checkbox-group')?.classList.remove('has-error');
+        }
+      }
+      
+      if (error) {
+        error.classList.remove('visible');
+      }
+    }
+
+    function clearAllErrors() {
+      clearError('contactPhone', 'phoneError');
+      clearError('contactConsent', 'consentError');
+    }
+
     // Form submission
     function submitContactForm(event) {
       event.preventDefault();
+      clearAllErrors();
       
       const form = document.getElementById('contactForm');
       const name = document.getElementById('contactName').value;
       const phone = document.getElementById('contactPhone').value;
       const consent = document.getElementById('contactConsent').checked;
       
+      let hasError = false;
+      
       // Validate phone (Polish format)
       const phoneClean = phone.replace(/\s/g, '');
       if (!/^(\+48)?[0-9]{9}$/.test(phoneClean)) {
-        alert('Proszę podać poprawny numer telefonu (9 cyfr)');
-        return;
+        showError('contactPhone', 'phoneError', 'Podaj poprawny numer telefonu (9 cyfr)');
+        hasError = true;
       }
       
       if (!consent) {
-        alert('Proszę wyrazić zgodę na kontakt');
-        return;
+        showError('contactConsent', 'consentError', 'Wymagana zgoda na kontakt');
+        hasError = true;
       }
+      
+      if (hasError) return;
       
       // Send via mailto (can be replaced with Web3Forms or other service)
       const subject = encodeURIComponent('Molab Screens - Prośba o kontakt');
@@ -2658,9 +2734,19 @@
           form.style.display = 'block';
           form.reset();
           document.getElementById('formSuccess').style.display = 'none';
+          clearAllErrors();
         }, 300);
       }, 3000);
     }
+
+    // Clear errors on input
+    document.getElementById('contactPhone')?.addEventListener('input', function() {
+      clearError('contactPhone', 'phoneError');
+    });
+    
+    document.getElementById('contactConsent')?.addEventListener('change', function() {
+      clearError('contactConsent', 'consentError');
+    });
   </script>
 </body>
 </html>
