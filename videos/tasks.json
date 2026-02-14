@@ -1,0 +1,13 @@
+{
+  "generated": "2026-01-30T19:02:00Z",
+  "model": "veo3_fast",
+  "aspectRatio": "9:16",
+  "tasks": [
+    {"id": "93a780f7c2708fd7756a9fcc5ae5aaba", "name": "01-fryzjer", "prompt": "Cinematic shot of a sleek vertical tablet..."},
+    {"id": "970bc05c8ee4a7c3f6f0fd4b44346b78", "name": "02-manicure", "prompt": "Elegant nail salon interior..."},
+    {"id": "10f1dc7a641e0d963184c7dbc800036d", "name": "03-dentysta", "prompt": "Modern dental clinic waiting room..."},
+    {"id": "8157acad0a8ee0a22fc5f3df93b5a11b", "name": "04-spa", "prompt": "Zen spa treatment room..."},
+    {"id": "354b822032204fec71064679ea77c1f2", "name": "05-tatuaz", "prompt": "Industrial tattoo studio..."},
+    {"id": "8b7198e5d704ab163720858ee5c27527", "name": "06-weterynarz", "prompt": "Cozy veterinary clinic waiting area..."}
+  ]
+}
