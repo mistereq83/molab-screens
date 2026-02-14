@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molab Screens - Zwiększ przychody gabinetu z AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-navy: #1a1f3a;
+            --dark-charcoal: #2a2d3a;
+            --light-charcoal: #3c3f52;
+            --accent-gold: #f4a024;
+            --accent-amber: #fbb040;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b5c9;
+            --text-muted: #7c7f93;
+            --background: #0f1419;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(26, 31, 58, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--light-charcoal);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--dark-charcoal) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-amber));
+            color: var(--primary-navy);
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(244, 160, 36, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(244, 160, 36, 0.4);
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--dark-charcoal);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: var(--light-charcoal);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(244, 160, 36, 0.1);
+        }
+
+        .problem-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--light-charcoal), var(--dark-charcoal));
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .step {
+            background: var(--light-charcoal);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(244, 160, 36, 0.2);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gold);
+            color: var(--primary-navy);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* Screen Mockup */
+        .screen-mockup {
+            background: #333;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 8px solid #222;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .screen-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        /* ROI Calculator */
+        .calculator {
+            background: var(--light-charcoal);
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .calculator-input {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group input {
+            background: var(--dark-charcoal);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .calculator-result {
+            background: var(--primary-navy);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        /* Case Study */
+        .case-study {
+            background: var(--primary-navy);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .case-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .pricing-card {
+            background: var(--light-charcoal);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent-gold);
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Content Examples */
+        .content-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .content-card {
+            background: var(--light-charcoal);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .content-preview {
+            height: 200px;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-amber));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-navy);
+            font-weight: 600;
+        }
+
+        .content-description {
+            padding: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .section {
+                padding: 4rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#home" class="nav-logo">Molab Screens</a>
+            <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Rozwiązanie</a></li>
+                <li><a href="#roi">ROI</a></li>
+                <li><a href="#pricing">Cennik</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="progress-bar"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="section hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="heading-font">Twoi pacjenci czekają 20 minut.<br>Co widzą?</h1>
+                <p class="subtitle">Zamiast pustych ścian - system AI, który zwiększa Twoje przychody o 29.5% dzięki inteligentnemu upsellingowi</p>
+                <a href="#contact" class="cta-button">Umów bezpłatną analizę gabinetu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="section problem">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Dlaczego tracisz pieniądze każdego dnia?</h2>
+                <p>Twój gabinet ma potencjał, którego nie wykorzystujesz. Oto prawdziwe koszty obecnej sytuacji:</p>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">😴</div>
+                    <h3>Znudzeni pacjenci</h3>
+                    <p>Średni czas oczekiwania to 15-30 minut. Pacjenci siedzą ze stresem, patrząc w telefon lub na pustą ścianę</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">💰</div>
+                    <h3>Spadające marże</h3>
+                    <p>Konkurencja rośnie, NFZ płaci mniej, a koszty rosną. Musisz znaleźć nowe źródła przychodów</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">😟</div>
+                    <h3>Personel nie sprzedaje</h3>
+                    <p>Asystentki zapominają, nie chcą być nachalne lub nie mają czasu na proponowanie dodatkowych usług</p>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 4rem;">
+                <h3 style="color: var(--accent-gold); font-size: 1.8rem;">Ile to Cię kosztuje?</h3>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <p>pacjentów dziennie</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">×</div>
+                    <p></p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">200zł</div>
+                    <p>średni upselling</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">=</div>
+                    <p></p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #ff4444;">22k zł</div>
+                    <p>miesięcznie TRACONE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Molab Screens: Twój partner w zwiększaniu przychodów</h2>
+                <p>To nie jest sprzedaż ekranu. To partnerstwo w optymalizacji Twojego biznesu dentystycznego.</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Analiza biznesowa</h3>
+                    <p>Przychodzimy do Twojego gabinetu i analizujemy, jakie usługi możesz sprzedać jako upselling</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Wdrożenie + AI</h3>
+                    <p>Instalujemy ekrany i system AI. Ty sam generujesz grafiki z szablonami Twojej marki</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Testowanie</h3>
+                    <p>Wspólnie testujemy różne treści, promocje i komunikaty. Sprawdzamy, co działa najlepiej</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Optymalizacja</h3>
+                    <p>Iterujemy, analizujemy wyniki, robimy testy A/B. Nie zostawiamy Cię z ekranem</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI in Action -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">AI w akcji: Tworzysz treści w 30 sekund</h2>
+                <p>Wyobraź sobie, że chcesz promować wybielanie zębów. Wystarczy jedno kliknięcie:</p>
+            </div>
+
+            <div class="screen-mockup">
+                <div class="screen-content">
+                    <h3>🦷 Wybielanie Beyond</h3>
+                    <p><strong>Biały uśmiech w 1 godzinę!</strong></p>
+                    <p>💰 Tylko dziś: -20%<br>🕐 Umów się jeszcze dzisiaj</p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">Bezpieczne • Bezbolesne • Gwarantowane</p>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">
+                Wpisałeś: "Promocja wybielania Beyond" → AI wygenerowało gotową grafikę z Twoim logo i cenami
+            </p>
+        </div>
+    </section>
+
+    <!-- Content Examples -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Co wyświetlać? Mamy gotowe rozwiązania</h2>
+                <p>Każda treść ma jeden cel: zwiększyć wartość wizyty pacjenta</p>
+            </div>
+
+            <div class="content-examples">
+                <div class="content-card">
+                    <div class="content-preview">
+                        <div style="text-align: center;">
+                            <h4>✨ Wybielanie</h4>
+                            <p>Biały uśmiech w 1h</p>
+                            <small>-20% do końca miesiąca</small>
+                        </div>
+                    </div>
+                    <div class="content-description">
+                        <h4>Upselling wybielania</h4>
+                        <p>Promocje sezonowe, porównania przed/po, gwarancje bezpieczeństwa</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-preview">
+                        <div style="text-align: center;">
+                            <h4>🦷 Implanty</h4>
+                            <p>Bezbolesne wstawianie</p>
+                            <small>Dożywotnia gwarancja</small>
+                        </div>
+                    </div>
+                    <div class="content-description">
+                        <h4>Edukacja o implantach</h4>
+                        <p>Rozwiewanie mitów, pokazanie procesu, historie sukcesu</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-preview">
+                        <div style="text-align: center;">
+                            <h4>🧼 Higiena</h4>
+                            <p>Pakiet profilaktyczny</p>
+                            <small>Skaling + piaskowanie</small>
+                        </div>
+                    </div>
+                    <div class="content-description">
+                        <h4>Pakiety profilaktyczne</h4>
+                        <p>Regularne wizyty, zniżki za lojalność, przypomnienia</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-preview">
+                        <div style="text-align: center;">
+                            <h4>😌 Bez stresu</h4>
+                            <p>Sedacja wziewna</p>
+                            <small>Spokojne zabiegi</small>
+                        </div>
+                    </div>
+                    <div class="content-description">
+                        <h4>Redukcja lęku</h4>
+                        <p>Informacje o bezbolesnych metodach, uspokajające komunikaty</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Data -->
+    <section id="roi" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Twarde dane: ROI, które możesz zmierzyć</h2>
+                <p>Nie wierzymy w obietnice bez pokrycia. Oto sprawdzone statystyki z branży:</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">19%</div>
+                    <p>pacjentów robi impulse purchases po digital signage</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">29.5%</div>
+                    <p>wzrost average order value</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">35%</div>
+                    <p>redukcja postrzeganego czasu oczekiwania</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">+25%</div>
+                    <p>upselling usług dodatkowych</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">+40%</div>
+                    <p>patient satisfaction = więcej rekomendacji</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">8-12</div>
+                    <p>miesięcy do break-even</p>
+                </div>
+            </div>
+
+            <!-- ROI Calculator -->
+            <div class="calculator">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--accent-gold);">Kalkulator ROI dla Twojego gabinetu</h3>
+                
+                <div class="calculator-input">
+                    <div class="input-group">
+                        <label>Pacjenci dziennie</label>
+                        <input type="number" id="patients" value="15" min="1" max="100">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Średnia wartość wizyty (zł)</label>
+                        <input type="number" id="avgVisit" value="200" min="50" max="1000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Dni pracy w miesiącu</label>
+                        <input type="number" id="workDays" value="22" min="15" max="31">
+                    </div>
+                </div>
+                
+                <div class="calculator-result">
+                    <p>Twój potencjalny dodatkowy przychód:</p>
+                    <div class="result-value" id="roiResult">+19,470 zł/miesiąc</div>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">przy 29.5% wzroście wartości wizyty</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Service -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Usługa Premium: Custom widgety i A/B testy</h2>
+                <p>Dla najbardziej zaawansowanych gabinetów oferujemy dynamiczne rozwiązania</p>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">🎯</div>
+                    <h3>Personalizowane treści</h3>
+                    <p>Wyświetlanie różnych treści w zależności od pory dnia, dnia tygodnia czy profilu pacjenta</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">📊</div>
+                    <h3>Testy A/B</h3>
+                    <p>Porównujemy skuteczność różnych komunikatów i automatycznie wybieramy najlepsze</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">⚡</div>
+                    <h3>Dynamiczne widgety</h3>
+                    <p>Mini-aplikacje na ekranach: pogoda, newsy, interaktywne quizy o higienie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study -->
+    <section class="section">
+        <div class="container">
+            <div class="case-study">
+                <div class="section-header">
+                    <h2 class="heading-font" style="color: white;">Case Study: Gabinet DentalCare Gdańsk</h2>
+                    <p style="color: var(--text-secondary);">Jak jeden z naszych klientów zwiększył przychody o 35% w 6 miesięcy</p>
+                </div>
+
+                <div style="background: var(--light-charcoal); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                    <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">Wyzwanie:</h4>
+                    <p>Gabinet z 4 fotelami w centrum Gdańska. Problem: pacjenci rzadko decydowali się na usługi dodatkowe, marże spadały z powodu konkurencji</p>
+                </div>
+
+                <div style="background: var(--light-charcoal); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                    <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">Rozwiązanie:</h4>
+                    <p>Zainstalowaliśmy 3 ekrany w poczekalni i gabinecie. Skupiliśmy się na promocji wybielania, implantów i pakietów profilaktycznych</p>
+                </div>
+
+                <div class="case-metrics">
+                    <div class="metric">
+                        <div class="metric-value">+35%</div>
+                        <p>wzrost przychodów</p>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value">+28%</div>
+                        <p>więcej whiteningów</p>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value">+42%</div>
+                        <p>sprzedaż pakietów</p>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value">ROI</div>
+                        <p>9 miesięcy</p>
+                    </div>
+                </div>
+
+                <blockquote style="border-left: 3px solid var(--accent-gold); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--text-secondary);">
+                    "Nie spodziewałem się, że ekrany mogą tak wpłynąć na biznes. Pacjenci sami pytają o wybielanie, a my nie musimy nic sprzedawać - ekrany robią to za nas."
+                    <br><strong style="color: white;">- Dr. Kowalski, DentalCare Gdańsk</strong>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Pakiety dostosowane do Twojego gabinetu</h2>
+                <p>Nie płacisz za ekrany. Płacisz za zwiększone przychody.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Start</h3>
+                    <div class="price">1,490 zł<small>/mies</small></div>
+                    <ul class="features">
+                        <li>✅ 1 ekran 24" + instalacja</li>
+                        <li>✅ Generator treści AI</li>
+                        <li>✅ Biblioteka szablonów</li>
+                        <li>✅ Podstawowe wsparcie</li>
+                        <li>✅ Aktualizacje systemowe</li>
+                        <li>❌ Analiza biznesowa</li>
+                        <li>❌ Testy A/B</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="margin-top: 2rem;">Wybierz Start</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Pro <span style="color: var(--accent-gold);">POPULARNE</span></h3>
+                    <div class="price">2,490 zł<small>/mies</small></div>
+                    <ul class="features">
+                        <li>✅ 2 ekrany + instalacja</li>
+                        <li>✅ Generator treści AI</li>
+                        <li>✅ Analiza biznesowa (1x start)</li>
+                        <li>✅ Doradztwo w optymalizacji</li>
+                        <li>✅ Raporting wyników</li>
+                        <li>✅ Priorytetowe wsparcie</li>
+                        <li>✅ Kwartalne konsultacje</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="margin-top: 2rem;">Wybierz Pro</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price">3,990 zł<small>/mies</small></div>
+                    <ul class="features">
+                        <li>✅ 3+ ekrany + instalacja</li>
+                        <li>✅ Wszystko z pakietu Pro</li>
+                        <li>✅ Custom widgety</li>
+                        <li>✅ Testy A/B automatyczne</li>
+                        <li>✅ Personalizacja treści</li>
+                        <li>✅ Dedykowany konsultant</li>
+                        <li>✅ Miesięczne optymalizacje</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="margin-top: 2rem;">Wybierz Premium</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--light-charcoal); border-radius: 15px;">
+                <h4 style="color: var(--accent-gold); margin-bottom: 1rem;">💡 Wskazówka</h4>
+                <p>Większość naszych klientów zwraca inwestycję w 8-12 miesięcy. Średni ROI po pierwszym roku: 300%</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section" style="background: linear-gradient(135deg, var(--primary-navy) 0%, var(--dark-charcoal) 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="heading-font">Gotowy na zwiększenie przychodów?</h2>
+                <p>Umów bezpłatną analizę swojego gabinetu. Pokażemy Ci konkretne możliwości wzrostu</p>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="tel:+48123456789" class="cta-button" style="margin: 1rem;">📞 Zadzwoń: +48 123 456 789</a>
+                <a href="mailto:kontakt@molabscreens.pl" class="cta-button" style="margin: 1rem;">✉️ kontakt@molabscreens.pl</a>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem; color: var(--text-secondary);">
+                <h4 style="color: var(--accent-gold);">Co otrzymasz podczas bezpłatnej analizy:</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div>✅ Audit obecnego flow pacjenta</div>
+                    <div>✅ Identyfikacja możliwości upsellingu</div>
+                    <div>✅ Kalkulacja potencjalnego ROI</div>
+                    <div>✅ Mockup treści dla Twojego gabinetu</div>
+                </div>
+                <p><strong>Czas wizyty: 45 minut • Koszt: 0 zł</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Progress bar
+        function updateProgressBar() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        }
+
+        window.addEventListener('scroll', updateProgressBar);
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // ROI Calculator
+        function calculateROI() {
+            const patients = parseInt(document.getElementById('patients').value) || 0;
+            const avgVisit = parseInt(document.getElementById('avgVisit').value) || 0;
+            const workDays = parseInt(document.getElementById('workDays').value) || 0;
+            
+            const monthlyRevenue = patients * avgVisit * workDays;
+            const increase = monthlyRevenue * 0.295; // 29.5% increase
+            
+            document.getElementById('roiResult').textContent = 
+                '+' + Math.round(increase).toLocaleString('pl-PL') + ' zł/miesiąc';
+        }
+
+        // Bind calculator inputs
+        ['patients', 'avgVisit', 'workDays'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateROI);
+        });
+
+        // Initialize calculator
+        calculateROI();
+
+        // Initial visibility check
+        setTimeout(() => {
+            document.querySelectorAll('.section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    section.classList.add('visible');
+                }
+            });
+        }, 100);
+    </script>
+</body>
+</html>
