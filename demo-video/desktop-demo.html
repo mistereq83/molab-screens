@@ -3,450 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molab Screens - Demo Video</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Molab Screens — Demo</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Outfit', sans-serif;
             background: #0a0a0b;
-            color: white;
+            color: #fff;
             overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        .demo-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0a0a0b 0%, #161618 100%);
+            width: 1920px;
+            height: 1080px;
         }
 
         .slide {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: opacity 0.8s ease;
+            pointer-events: none;
         }
 
         .slide.active {
             opacity: 1;
-            transform: translateY(0);
+            pointer-events: auto;
         }
 
-        /* Intro Slide */
-        .intro-slide {
+        /* Intro & Outro */
+        .slide-intro, .slide-outro {
+            flex-direction: column;
+            gap: 24px;
             text-align: center;
-            background: radial-gradient(ellipse at center, #161618 0%, #0a0a0b 100%);
         }
 
-        .intro-slide .logo {
-            width: 400px;
-            height: auto;
-            margin-bottom: 2rem;
-            animation: logoGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes logoGlow {
-            from { filter: drop-shadow(0 0 20px rgba(244, 185, 37, 0.3)); }
-            to { filter: drop-shadow(0 0 40px rgba(244, 185, 37, 0.6)); }
-        }
-
-        .intro-slide h1 {
-            font-size: 3rem;
+        .slide-intro .logo { width: 280px; margin-bottom: 20px; }
+        .slide-intro h1 {
+            font-size: 64px;
             font-weight: 700;
             color: #f4b925;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 30px rgba(244, 185, 37, 0.5);
+            line-height: 1.1;
         }
-
-        .intro-slide .subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 400;
-        }
-
-        /* Screenshot Slides */
-        .screenshot-slide {
-            padding: 2rem;
-        }
-
-        .screenshot-slide img {
-            max-width: 90%;
-            max-height: 75%;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(244, 185, 37, 0.2);
-        }
-
-        /* Outro Slide */
-        .outro-slide {
-            text-align: center;
-            background: radial-gradient(ellipse at center, #1a1a1c 0%, #0a0a0b 100%);
-        }
-
-        .outro-slide .logo {
-            width: 300px;
-            height: auto;
-            margin-bottom: 2rem;
-        }
-
-        .outro-slide h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #f4b925;
-            margin-bottom: 1rem;
-        }
-
-        .outro-slide .tagline {
-            font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
+        .slide-intro .tagline {
+            font-size: 28px;
+            color: #aaa;
             font-weight: 300;
         }
 
-        .outro-slide .contact {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
+        /* Screenshot slides */
+        .slide-screenshot {
+            flex-direction: column;
+            padding: 40px 80px;
         }
 
-        /* Caption Bar */
-        .caption-bar {
+        .screenshot-wrapper {
+            position: relative;
+            max-width: 1600px;
+            max-height: 820px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+        }
+
+        .screenshot-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 820px;
+            object-fit: contain;
+        }
+
+        /* Caption bar */
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 50px 80px 40px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .caption-text {
+            font-size: 28px;
+            font-weight: 500;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6);
+            max-width: 70%;
+            line-height: 1.4;
+        }
+
+        .caption-step {
+            font-size: 18px;
+            color: #f4b925;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            white-space: nowrap;
+        }
+
+        /* Progress bar */
+        .progress {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%);
-            padding: 1.5rem 2rem;
-            backdrop-filter: blur(10px);
+            height: 4px;
+            background: rgba(244, 185, 37, 0.15);
             z-index: 100;
         }
 
-        .caption {
-            text-align: center;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 400;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.6s ease;
-        }
-
-        .caption.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            z-index: 200;
-        }
-
-        .progress-bar {
+        .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #f4b925 0%, #d7561f 50%, #1980c2 100%);
+            background: linear-gradient(90deg, #f4b925, #d7561f);
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.3s linear;
         }
 
-        /* Step Counter */
-        .step-counter {
-            position: fixed;
-            bottom: 1.5rem;
-            left: 2rem;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 500;
-            z-index: 150;
-        }
-
-        /* Auto-play controls */
-        .play-controls {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 2rem;
-            z-index: 150;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .control-btn {
-            background: rgba(244, 185, 37, 0.2);
-            border: 1px solid rgba(244, 185, 37, 0.5);
+        /* Outro */
+        .slide-outro h2 {
+            font-size: 48px;
+            font-weight: 600;
             color: #f4b925;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+        .slide-outro .sub {
+            font-size: 24px;
+            color: #888;
+            font-weight: 300;
+        }
+        .slide-outro .contact {
+            margin-top: 40px;
+            font-size: 20px;
+            color: #666;
+        }
+        .slide-outro .contact a {
+            color: #f4b925;
+            text-decoration: none;
         }
 
-        .control-btn:hover {
-            background: rgba(244, 185, 37, 0.3);
-            border-color: #f4b925;
+        /* Corner logo */
+        .corner-logo {
+            position: fixed;
+            top: 24px;
+            left: 32px;
+            width: 140px;
+            opacity: 0.6;
+            z-index: 50;
         }
+        .corner-logo svg { width: 100%; }
 
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .intro-slide .logo { width: 300px; }
-            .intro-slide h1 { font-size: 2.5rem; }
-            .intro-slide .subtitle { font-size: 1.2rem; }
-            .outro-slide h2 { font-size: 2rem; }
-            .outro-slide .tagline { font-size: 1.4rem; }
+        /* Keyboard hint */
+        .hint {
+            position: fixed;
+            bottom: 16px;
+            right: 24px;
+            font-size: 13px;
+            color: #444;
+            z-index: 100;
         }
     </style>
 </head>
 <body>
-    <div class="demo-container">
-        <!-- Progress Bar -->
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
+    <!-- Corner Logo -->
+    <div class="corner-logo">
+        <svg viewBox="0 0 670.04 120.38" xmlns="http://www.w3.org/2000/svg">
+            <defs><style>.c1{fill:#f4b823}.c2{fill:#d7561f}.c3{fill:#1980c2}</style></defs>
+            <path class="c2" d="M279.76,56.78c0,32.48,26.33,58.81,58.81,58.81h46.75c4.45,0,6.68-5.38,3.53-8.53L288.29,6.5c-3.15-3.15-8.53-.92-8.53,3.53v46.75Z"/>
+            <path class="c3" d="M471.37,0c-33.18.25-59.73,27.75-59.73,60.94v49.6c0,2.77,2.25,5.02,5.02,5.02,1.88,0,3.52-1.04,4.38-2.57 10.68-16.75,29.43-27.87,50.78-27.87s40.09,11.11,50.78,27.87c.86,1.53,2.5,2.57,4.38,2.57,2.77,0,5.02-2.25,5.02-5.02v-45.31s0-5.04,0-5.04C532.01,26.8,504.82-.24,471.37,0Z"/>
+            <circle cx="200.16" cy="60.19" r="60.19" fill="#f4b823"/>
+            <path fill="#fff" d="M120.37,9.9c0-2.77-2.25-5.02-5.02-5.02-1.88,0-3.52,1.04-4.38,2.57-10.68,16.75-29.43,27.87-50.78,27.87S20.09,24.2,9.41,7.45c-.86-1.53-2.5-2.57-4.38-2.57C2.25,4.88,0,7.12,0,9.9v98.18c0,4.14,3.35,7.49,7.49,7.49h105.39c4.14,0,7.49-3.35,7.49-7.49V9.9Z"/>
+            <path class="c1" d="M631.59,38.34c-.15-21.37-17.68-38.62-39.16-38.31-21.19.3-38.03,17.97-38.03,39.17v69.68c0,3.68,2.98,6.66,6.66,6.66h69.82c21.19,0,38.86-16.84,39.17-38.03.31-21.52-17.01-39.07-38.45-39.16Z"/>
+        </svg>
+    </div>
+
+    <!-- Slides -->
+    <div class="slide slide-intro active" data-duration="3500">
+        <svg viewBox="0 0 670.04 120.38" xmlns="http://www.w3.org/2000/svg" class="logo">
+            <defs><style>.c1{fill:#f4b823}.c2{fill:#d7561f}.c3{fill:#1980c2}</style></defs>
+            <path class="c2" d="M279.76,56.78c0,32.48,26.33,58.81,58.81,58.81h46.75c4.45,0,6.68-5.38,3.53-8.53L288.29,6.5c-3.15-3.15-8.53-.92-8.53,3.53v46.75Z"/>
+            <path class="c3" d="M471.37,0c-33.18.25-59.73,27.75-59.73,60.94v49.6c0,2.77,2.25,5.02,5.02,5.02,1.88,0,3.52-1.04,4.38-2.57 10.68-16.75,29.43-27.87,50.78-27.87s40.09,11.11,50.78,27.87c.86,1.53,2.5,2.57,4.38,2.57,2.77,0,5.02-2.25,5.02-5.02v-45.31s0-5.04,0-5.04C532.01,26.8,504.82-.24,471.37,0Z"/>
+            <circle cx="200.16" cy="60.19" r="60.19" fill="#f4b823"/>
+            <path fill="#fff" d="M120.37,9.9c0-2.77-2.25-5.02-5.02-5.02-1.88,0-3.52,1.04-4.38,2.57-10.68,16.75-29.43,27.87-50.78,27.87S20.09,24.2,9.41,7.45c-.86-1.53-2.5-2.57-4.38-2.57C2.25,4.88,0,7.12,0,9.9v98.18c0,4.14,3.35,7.49,7.49,7.49h105.39c4.14,0,7.49-3.35,7.49-7.49V9.9Z"/>
+            <path class="c1" d="M631.59,38.34c-.15-21.37-17.68-38.62-39.16-38.31-21.19.3-38.03,17.97-38.03,39.17v69.68c0,3.68,2.98,6.66,6.66,6.66h69.82c21.19,0,38.86-16.84,39.17-38.03.31-21.52-17.01-39.07-38.45-39.16Z"/>
+        </svg>
+        <h1>Molab Screens</h1>
+        <p class="tagline">Twórz profesjonalne grafiki w kilka kliknięć</p>
+    </div>
+
+    <div class="slide slide-screenshot" data-duration="3000">
+        <div class="screenshot-wrapper">
+            <img src="desktop-recording/01-login.jpg" alt="Logowanie">
         </div>
-
-        <!-- Step Counter -->
-        <div class="step-counter" id="stepCounter">1/7</div>
-
-        <!-- Play Controls -->
-        <div class="play-controls">
-            <button class="control-btn" onclick="toggleAutoPlay()" id="playBtn">⏸️ Pauza</button>
-            <button class="control-btn" onclick="restartDemo()">🔄 Od nowa</button>
-        </div>
-
-        <!-- Slide 1: Intro -->
-        <div class="slide active intro-slide">
-            <div class="logo">
-                <svg viewBox="0 0 670.04 120.38" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <style>.cls-1{fill:#f4b823;}.cls-2{fill:#d7561f;}.cls-3{fill:#1980c2;}</style>
-                    </defs>
-                    <g>
-                        <path class="cls-2" d="M279.76,56.78c0,32.48,26.33,58.81,58.81,58.81h46.75c4.45,0,6.68-5.38,3.53-8.53L288.29,6.5c-3.15-3.15-8.53-.92-8.53,3.53v46.75Z"/>
-                        <path class="cls-3" d="M471.37,0c-33.18.25-59.73,27.75-59.73,60.94v49.6c0,2.77,2.25,5.02,5.02,5.02,1.88,0,3.52-1.04,4.38-2.57h0s0,0,0,0c10.68-16.75,29.43-27.87,50.78-27.87s40.09,11.11,50.78,27.87h0s0,0,0,0c.86,1.53,2.5,2.57,4.38,2.57,2.77,0,5.02-2.25,5.02-5.02v-45.31s0-5.04,0-5.04C532.01,26.8,504.82-.24,471.37,0Z"/>
-                        <circle cx="200.16" cy="60.19" r="60.19" fill="#f4b823"/>
-                        <path fill="#ffffff" d="M120.37,9.9c0-2.77-2.25-5.02-5.02-5.02-1.88,0-3.52,1.04-4.38,2.57h0s0,0,0,0c-10.68,16.75-29.43,27.87-50.78,27.87S20.09,24.2,9.41,7.45h0s0,0,0,0c-.86-1.53-2.5-2.57-4.38-2.57C2.25,4.88,0,7.12,0,9.9v98.18c0,4.14,3.35,7.49,7.49,7.49h105.39c4.14,0,7.49-3.35,7.49-7.49V9.9Z"/>
-                        <path class="cls-1" d="M631.59,38.34h0s0,0,0,0h0c-.15-21.37-17.68-38.62-39.16-38.31-21.19.3-38.03,17.97-38.03,39.17v69.68c0,3.68,2.98,6.66,6.66,6.66h69.82c21.19,0,38.86-16.84,39.17-38.03.31-21.52-17.01-39.07-38.45-39.16Z"/>
-                    </g>
-                </svg>
-            </div>
-            <h1>Molab Screens</h1>
-            <p class="subtitle">Twórz profesjonalne grafiki w kilka kliknięć</p>
-        </div>
-
-        <!-- Slide 2: Login -->
-        <div class="slide screenshot-slide">
-            <img src="desktop-recording/01-login.jpg" alt="Logowanie do panelu" loading="lazy">
-        </div>
-
-        <!-- Slide 3: AI Generator Empty -->
-        <div class="slide screenshot-slide">
-            <img src="desktop-recording/02-ai-generator-empty.jpg" alt="Pusty formularz AI Generator" loading="lazy">
-        </div>
-
-        <!-- Slide 4: AI Generator Filled -->
-        <div class="slide screenshot-slide">
-            <img src="desktop-recording/03-ai-filled-sanacja.jpg" alt="Wypełniony formularz z szablonem" loading="lazy">
-        </div>
-
-        <!-- Slide 5: Generating -->
-        <div class="slide screenshot-slide">
-            <img src="desktop-recording/04-generating.jpg" alt="Proces generowania grafiki" loading="lazy">
-        </div>
-
-        <!-- Slide 6: Result -->
-        <div class="slide screenshot-slide">
-            <img src="desktop-recording/05-result.jpg" alt="Gotowa profesjonalna grafika" loading="lazy">
-        </div>
-
-        <!-- Slide 7: Outro -->
-        <div class="slide outro-slide">
-            <div class="logo">
-                <svg viewBox="0 0 670.04 120.38" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <style>.cls-1{fill:#f4b823;}.cls-2{fill:#d7561f;}.cls-3{fill:#1980c2;}</style>
-                    </defs>
-                    <g>
-                        <path class="cls-2" d="M279.76,56.78c0,32.48,26.33,58.81,58.81,58.81h46.75c4.45,0,6.68-5.38,3.53-8.53L288.29,6.5c-3.15-3.15-8.53-.92-8.53,3.53v46.75Z"/>
-                        <path class="cls-3" d="M471.37,0c-33.18.25-59.73,27.75-59.73,60.94v49.6c0,2.77,2.25,5.02,5.02,5.02,1.88,0,3.52-1.04,4.38-2.57h0s0,0,0,0c10.68-16.75,29.43-27.87,50.78-27.87s40.09,11.11,50.78,27.87h0s0,0,0,0c.86,1.53,2.5,2.57,4.38,2.57,2.77,0,5.02-2.25,5.02-5.02v-45.31s0-5.04,0-5.04C532.01,26.8,504.82-.24,471.37,0Z"/>
-                        <circle cx="200.16" cy="60.19" r="60.19" fill="#f4b823"/>
-                        <path fill="#ffffff" d="M120.37,9.9c0-2.77-2.25-5.02-5.02-5.02-1.88,0-3.52,1.04-4.38,2.57h0s0,0,0,0c-10.68,16.75-29.43,27.87-50.78,27.87S20.09,24.2,9.41,7.45h0s0,0,0,0c-.86-1.53-2.5-2.57-4.38-2.57C2.25,4.88,0,7.12,0,9.9v98.18c0,4.14,3.35,7.49,7.49,7.49h105.39c4.14,0,7.49-3.35,7.49-7.49V9.9Z"/>
-                        <path class="cls-1" d="M631.59,38.34h0s0,0,0,0h0c-.15-21.37-17.68-38.62-39.16-38.31-21.19.3-38.03,17.97-38.03,39.17v69.68c0,3.68,2.98,6.66,6.66,6.66h69.82c21.19,0,38.86-16.84,39.17-38.03.31-21.52-17.01-39.07-38.45-39.16Z"/>
-                    </g>
-                </svg>
-            </div>
-            <h2>Molab Screens</h2>
-            <p class="tagline">Twórz. Generuj. Wyświetlaj.</p>
-            <div class="contact">
-                <p>Kontakt: info@molab.pl</p>
-                <p>molab.pl</p>
-            </div>
-        </div>
-
-        <!-- Caption Bar -->
-        <div class="caption-bar">
-            <div class="caption active" id="caption">Twórz profesjonalne grafiki w kilka kliknięć</div>
+        <div class="caption">
+            <span class="caption-text">Zaloguj się do panelu zarządzania</span>
+            <span class="caption-step">Krok 1 / 5</span>
         </div>
     </div>
 
+    <div class="slide slide-screenshot" data-duration="3000">
+        <div class="screenshot-wrapper">
+            <img src="desktop-recording/02-ai-generator-empty.jpg" alt="AI Generator">
+        </div>
+        <div class="caption">
+            <span class="caption-text">Opisz promocję i wybierz elementy graficzne</span>
+            <span class="caption-step">Krok 2 / 5</span>
+        </div>
+    </div>
+
+    <div class="slide slide-screenshot" data-duration="4000">
+        <div class="screenshot-wrapper">
+            <img src="desktop-recording/03-ai-filled-sanacja.jpg" alt="Wypełniony formularz">
+        </div>
+        <div class="caption">
+            <span class="caption-text">Gotowy szablon „Sanacja" — AI dopasuje treść do Twojej promocji</span>
+            <span class="caption-step">Krok 3 / 5</span>
+        </div>
+    </div>
+
+    <div class="slide slide-screenshot" data-duration="3000">
+        <div class="screenshot-wrapper">
+            <img src="desktop-recording/04-generating.jpg" alt="Generowanie">
+        </div>
+        <div class="caption">
+            <span class="caption-text">AI tworzy profesjonalną grafikę — to zajmuje 2-3 minuty</span>
+            <span class="caption-step">Krok 4 / 5</span>
+        </div>
+    </div>
+
+    <div class="slide slide-screenshot" data-duration="5000">
+        <div class="screenshot-wrapper">
+            <img src="desktop-recording/05-result.jpg" alt="Gotowa grafika">
+        </div>
+        <div class="caption">
+            <span class="caption-text">Gotowe! Profesjonalna grafika gotowa do wyświetlenia na ekranie w recepcji</span>
+            <span class="caption-step">Krok 5 / 5</span>
+        </div>
+    </div>
+
+    <div class="slide slide-outro" data-duration="4000">
+        <svg viewBox="0 0 670.04 120.38" xmlns="http://www.w3.org/2000/svg" class="logo" style="width:200px;margin-bottom:20px">
+            <defs><style>.c1{fill:#f4b823}.c2{fill:#d7561f}.c3{fill:#1980c2}</style></defs>
+            <path class="c2" d="M279.76,56.78c0,32.48,26.33,58.81,58.81,58.81h46.75c4.45,0,6.68-5.38,3.53-8.53L288.29,6.5c-3.15-3.15-8.53-.92-8.53,3.53v46.75Z"/>
+            <path class="c3" d="M471.37,0c-33.18.25-59.73,27.75-59.73,60.94v49.6c0,2.77,2.25,5.02,5.02,5.02,1.88,0,3.52-1.04,4.38-2.57 10.68-16.75,29.43-27.87,50.78-27.87s40.09,11.11,50.78,27.87c.86,1.53,2.5,2.57,4.38,2.57,2.77,0,5.02-2.25,5.02-5.02v-45.31s0-5.04,0-5.04C532.01,26.8,504.82-.24,471.37,0Z"/>
+            <circle cx="200.16" cy="60.19" r="60.19" fill="#f4b823"/>
+            <path fill="#fff" d="M120.37,9.9c0-2.77-2.25-5.02-5.02-5.02-1.88,0-3.52,1.04-4.38,2.57-10.68,16.75-29.43,27.87-50.78,27.87S20.09,24.2,9.41,7.45c-.86-1.53-2.5-2.57-4.38-2.57C2.25,4.88,0,7.12,0,9.9v98.18c0,4.14,3.35,7.49,7.49,7.49h105.39c4.14,0,7.49-3.35,7.49-7.49V9.9Z"/>
+            <path class="c1" d="M631.59,38.34c-.15-21.37-17.68-38.62-39.16-38.31-21.19.3-38.03,17.97-38.03,39.17v69.68c0,3.68,2.98,6.66,6.66,6.66h69.82c21.19,0,38.86-16.84,39.17-38.03.31-21.52-17.01-39.07-38.45-39.16Z"/>
+        </svg>
+        <h2>Twórz. Generuj. Wyświetlaj.</h2>
+        <p class="sub">Profesjonalne treści na ekrany w Twojej firmie</p>
+        <p class="contact">info@molab.pl · <a href="https://molab.pl">molab.pl</a></p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="hint">Spacja = pauza · ← → nawigacja</div>
+
     <script>
         const slides = document.querySelectorAll('.slide');
-        const captions = [
-            'Twórz profesjonalne grafiki w kilka kliknięć',
-            'Zaloguj się do panelu',
-            'Opisz swoją promocję i elementy graficzne',
-            'Wybierz gotowy szablon — AI dopasuje treść',
-            'AI tworzy grafikę — to zajmuje 2-3 minuty',
-            'Gotowe! Profesjonalna grafika na ekran w recepcji',
-            'Molab Screens — Twórz. Generuj. Wyświetlaj.'
-        ];
-        const slideDurations = [3000, 3000, 3000, 4000, 3000, 5000, 4000]; // ms
-        
-        let currentSlide = 0;
-        let isAutoPlaying = true;
-        let autoPlayInterval;
-        let progressInterval;
+        const progressFill = document.getElementById('progressFill');
+        let current = 0;
+        let playing = true;
+        let timer = null;
 
-        const captionEl = document.getElementById('caption');
-        const progressBar = document.getElementById('progressBar');
-        const stepCounter = document.getElementById('stepCounter');
-        const playBtn = document.getElementById('playBtn');
-
-        function updateCaption() {
-            captionEl.classList.remove('active');
-            setTimeout(() => {
-                captionEl.textContent = captions[currentSlide];
-                captionEl.classList.add('active');
-            }, 200);
+        function totalDuration() {
+            let sum = 0;
+            slides.forEach(s => sum += parseInt(s.dataset.duration || 3000));
+            return sum;
         }
 
-        function updateProgress() {
-            const progress = ((currentSlide + 1) / slides.length) * 100;
-            progressBar.style.width = progress + '%';
+        function durationBefore(idx) {
+            let sum = 0;
+            for (let i = 0; i < idx; i++) sum += parseInt(slides[i].dataset.duration || 3000);
+            return sum;
         }
 
-        function updateStepCounter() {
-            stepCounter.textContent = `${currentSlide + 1}/7`;
-        }
+        function show(idx) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[idx].classList.add('active');
+            current = idx;
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
+            // Update progress
+            const total = totalDuration();
+            const before = durationBefore(idx);
+            const dur = parseInt(slides[idx].dataset.duration || 3000);
+            
+            progressFill.style.transition = 'none';
+            progressFill.style.width = (before / total * 100) + '%';
+            requestAnimationFrame(() => {
+                progressFill.style.transition = `width ${dur}ms linear`;
+                progressFill.style.width = ((before + dur) / total * 100) + '%';
             });
-            
-            currentSlide = index;
-            updateCaption();
-            updateProgress();
-            updateStepCounter();
         }
 
-        function nextSlide() {
-            if (currentSlide < slides.length - 1) {
-                showSlide(currentSlide + 1);
-                if (isAutoPlaying) {
-                    scheduleNextSlide();
-                }
+        function next() {
+            if (current < slides.length - 1) {
+                show(current + 1);
+                scheduleNext();
             } else {
-                // End of demo - restart after delay
-                setTimeout(restartDemo, 2000);
+                // Loop
+                show(0);
+                scheduleNext();
             }
         }
 
-        function scheduleNextSlide() {
-            clearTimeout(autoPlayInterval);
-            if (isAutoPlaying && currentSlide < slides.length - 1) {
-                autoPlayInterval = setTimeout(nextSlide, slideDurations[currentSlide]);
-            }
+        function prev() {
+            if (current > 0) show(current - 1);
+            scheduleNext();
         }
 
-        function toggleAutoPlay() {
-            isAutoPlaying = !isAutoPlaying;
-            playBtn.textContent = isAutoPlaying ? '⏸️ Pauza' : '▶️ Play';
-            
-            if (isAutoPlaying) {
-                scheduleNextSlide();
-            } else {
-                clearTimeout(autoPlayInterval);
-            }
+        function scheduleNext() {
+            clearTimeout(timer);
+            if (!playing) return;
+            const dur = parseInt(slides[current].dataset.duration || 3000);
+            timer = setTimeout(next, dur);
         }
 
-        function restartDemo() {
-            clearTimeout(autoPlayInterval);
-            currentSlide = 0;
-            showSlide(0);
-            isAutoPlaying = true;
-            playBtn.textContent = '⏸️ Pauza';
-            scheduleNextSlide();
-        }
-
-        // Initialize
-        updateProgress();
-        updateStepCounter();
-        
-        // Start auto-play
-        if (isAutoPlaying) {
-            scheduleNextSlide();
-        }
-
-        // Keyboard controls
-        document.addEventListener('keydown', (e) => {
-            switch(e.code) {
-                case 'ArrowRight':
-                case 'Space':
-                    if (currentSlide < slides.length - 1) {
-                        clearTimeout(autoPlayInterval);
-                        nextSlide();
-                    }
-                    break;
-                case 'ArrowLeft':
-                    if (currentSlide > 0) {
-                        clearTimeout(autoPlayInterval);
-                        showSlide(currentSlide - 1);
-                        if (isAutoPlaying) scheduleNextSlide();
-                    }
-                    break;
-                case 'KeyR':
-                    restartDemo();
-                    break;
-                case 'KeyP':
-                    toggleAutoPlay();
-                    break;
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') { next(); }
+            else if (e.key === 'ArrowLeft') { prev(); }
+            else if (e.key === ' ') {
+                e.preventDefault();
+                playing = !playing;
+                if (playing) scheduleNext();
+                else clearTimeout(timer);
             }
         });
 
-        // Click to advance
-        document.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('control-btn')) {
-                if (currentSlide < slides.length - 1) {
-                    clearTimeout(autoPlayInterval);
-                    nextSlide();
-                }
-            }
-        });
+        // Start
+        show(0);
+        scheduleNext();
     </script>
 </body>
 </html>
