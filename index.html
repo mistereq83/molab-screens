@@ -6,7 +6,7 @@
   <title>Molab Screens — Ekrany, które sprzedają</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       /* Molab Brand Colors */
@@ -17,7 +17,7 @@
       --molab-white: #ffffff;
       
       /* Light Theme */
-      --bg-dark: #ffffff;
+      --bg-dark: #F8FAFC;
       --bg-card: #f5f5f5;
       --bg-elevated: #ebebeb;
       --text-primary: #292929;
@@ -30,6 +30,7 @@
       --glow-secondary: rgba(215, 87, 31, 0.2);
       --border-subtle: rgba(0, 0, 0, 0.08);
       --font-main: 'Poppins', -apple-system, sans-serif;
+      --font-body: 'Open Sans', -apple-system, sans-serif;
     }
 
     * {
@@ -96,7 +97,7 @@
       backdrop-filter: blur(20px);
       background: rgba(255, 255, 255, 0.9);
       border-bottom: 1px solid var(--border-subtle);
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     .logo {
@@ -522,6 +523,77 @@
       color: var(--text-muted);
     }
 
+    /* Trust Section */
+    .trust-section {
+      padding: 4rem 2rem;
+      background: rgba(25, 128, 194, 0.02);
+      border-top: 1px solid rgba(25, 128, 194, 0.1);
+      border-bottom: 1px solid rgba(25, 128, 194, 0.1);
+      max-width: none;
+    }
+
+    .trust-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .trust-header h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2.5rem;
+      font-family: var(--font-body);
+    }
+
+    .trust-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .trust-stat {
+      padding: 1.5rem;
+    }
+
+    .trust-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--molab-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .trust-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+    }
+
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+    }
+
+    .badge-icon {
+      font-size: 1.2rem;
+    }
+
     /* Sections */
     section {
       padding: 8rem 2rem;
@@ -559,6 +631,7 @@
       font-size: 1.15rem;
       color: var(--text-secondary);
       font-weight: 300;
+      font-family: var(--font-body);
     }
 
     /* Problems Section */
@@ -588,7 +661,7 @@
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.04);
     }
 
     .problem-card::before {
@@ -686,6 +759,68 @@
       font-size: 0.95rem;
     }
 
+    /* Progress Stepper */
+    .progress-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+      padding: 2rem 1rem;
+    }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      max-width: 150px;
+    }
+
+    .progress-dot {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.active .progress-dot {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      border-color: var(--accent-1);
+      box-shadow: 0 2px 6px rgba(243, 184, 35, 0.3), 0 6px 12px rgba(243, 184, 35, 0.15);
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      line-height: 1.3;
+    }
+
+    .progress-step.active .progress-label {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .progress-line {
+      height: 2px;
+      background: var(--border-subtle);
+      flex: 1;
+      margin: 0 1rem;
+      margin-bottom: 2.5rem;
+      border-radius: 1px;
+    }
+
     /* How it works */
     .steps-container {
       display: flex;
@@ -733,6 +868,7 @@
 
     .step-content p {
       color: var(--text-secondary);
+      font-family: var(--font-body);
     }
 
     /* Strategy Section */
@@ -802,7 +938,7 @@
       margin: 0 auto 1.5rem;
       position: relative;
       z-index: 2;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 12px rgba(0, 0, 0, 0.04);
     }
 
     .strategy-step h3 {
@@ -814,6 +950,7 @@
     .strategy-step p {
       color: var(--text-secondary);
       font-size: 0.95rem;
+      font-family: var(--font-body);
     }
 
     /* Pricing Section */
@@ -1170,7 +1307,7 @@
       border-radius: 24px;
       padding: 2.5rem;
       position: relative;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.04);
     }
 
     .testimonial::before {
@@ -1194,6 +1331,7 @@
       margin-bottom: 1.5rem;
       font-style: italic;
       color: var(--text-secondary);
+      font-family: var(--font-body);
     }
 
     .testimonial-author {
@@ -1894,6 +2032,47 @@
         padding: 0.2rem 0.6rem;
       }
 
+      /* Trust section mobile */
+      .trust-stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .trust-badges {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .trust-badge {
+        padding: 0.8rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      /* Progress stepper mobile */
+      .progress-stepper {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem 1rem;
+      }
+
+      .progress-line {
+        height: 30px;
+        width: 2px;
+        margin: 0;
+        margin-bottom: 0;
+      }
+
+      .progress-dot {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 0.5rem;
+      }
+
+      .progress-label {
+        font-size: 0.75rem;
+      }
+
       /* Testimonials */
       .testimonials-grid {
         gap: 1rem;
@@ -2026,6 +2205,88 @@
     </div>
   </section>
 
+  <!-- Trust Section -->
+  <section class="trust-section">
+    <div class="trust-container">
+      <div class="trust-header">
+        <h3>Zaufali nam lokalni przedsiębiorcy z całej Polski</h3>
+      </div>
+      <div class="trust-stats">
+        <div class="trust-stat">
+          <div class="trust-number">150+</div>
+          <div class="trust-label">wdrożonych ekranów</div>
+        </div>
+        <div class="trust-stat">
+          <div class="trust-number">+27%</div>
+          <div class="trust-label">średni wzrost sprzedaży</div>
+        </div>
+        <div class="trust-stat">
+          <div class="trust-number">2 lata</div>
+          <div class="trust-label">średnia współpraca</div>
+        </div>
+      </div>
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <div class="badge-icon">🏆</div>
+          <span>Autoryzowany partner systemów Digital Signage</span>
+        </div>
+        <div class="trust-badge">
+          <div class="badge-icon">✓</div>
+          <span>100% zadowolonych klientów w 2023</span>
+        </div>
+        <div class="trust-badge">
+          <div class="badge-icon">⚡</div>
+          <span>Instalacja w 24h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="testimonials-inner">
+      <div class="section-header">
+        <span class="section-label">Opinie</span>
+        <h2 class="section-title">Co mówią nasi klienci?</h2>
+      </div>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial fade-in">
+          <p class="testimonial-text">„Sprzedaż deserów skoczyła o 30% w pierwszym miesiącu. Klienci sami pytają: co dziś jest w promocji?"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MK</div>
+            <div>
+              <div class="testimonial-name">Maria Kowalska</div>
+              <div class="testimonial-role">Właścicielka kawiarni, Gdańsk</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial fade-in">
+          <p class="testimonial-text">„Wcześniej czekałem tydzień na plakaty. Teraz o 10:00 mam pomysł, o 10:15 jest na ekranie. To zmienia wszystko."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">PN</div>
+            <div>
+              <div class="testimonial-name">Piotr Nowak</div>
+              <div class="testimonial-role">Manager restauracji, Sopot</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial fade-in">
+          <p class="testimonial-text">„Przestałam liczyć na to, że dziewczyny powiedzą o nowych zabiegach. Ekran robi to 200 razy dziennie."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AW</div>
+            <div>
+              <div class="testimonial-name">Anna Wiśniewska</div>
+              <div class="testimonial-role">Salon beauty, Gdynia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Problems -->
   <section class="problems">
     <div class="problems-inner">
@@ -2137,6 +2398,24 @@
     <div class="section-header">
       <span class="section-label">Jak to działa?</span>
       <h2 class="section-title">3 kroki do ekranu, który zarabia</h2>
+    </div>
+    
+    <!-- Progress Indicator -->
+    <div class="progress-stepper">
+      <div class="progress-step active">
+        <div class="progress-dot">1</div>
+        <div class="progress-label">Wybierz ekran</div>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="progress-dot">2</div>
+        <div class="progress-label">Wybierz obsługę</div>
+      </div>
+      <div class="progress-line"></div>
+      <div class="progress-step">
+        <div class="progress-dot">3</div>
+        <div class="progress-label">Zaczynasz sprzedawać</div>
+      </div>
     </div>
     
     <div class="steps-container">
@@ -2360,50 +2639,7 @@
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="testimonials">
-    <div class="testimonials-inner">
-      <div class="section-header">
-        <span class="section-label">Opinie</span>
-        <h2 class="section-title">Co mówią nasi klienci?</h2>
-      </div>
-      
-      <div class="testimonials-grid">
-        <div class="testimonial fade-in">
-          <p class="testimonial-text">„Sprzedaż deserów skoczyła o 30% w pierwszym miesiącu. Klienci sami pytają: co dziś jest w promocji?"</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">MK</div>
-            <div>
-              <div class="testimonial-name">Maria Kowalska</div>
-              <div class="testimonial-role">Właścicielka kawiarni, Gdańsk</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial fade-in">
-          <p class="testimonial-text">„Wcześniej czekałem tydzień na plakaty. Teraz o 10:00 mam pomysł, o 10:15 jest na ekranie. To zmienia wszystko."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">PN</div>
-            <div>
-              <div class="testimonial-name">Piotr Nowak</div>
-              <div class="testimonial-role">Manager restauracji, Sopot</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial fade-in">
-          <p class="testimonial-text">„Przestałam liczyć na to, że dziewczyny powiedzą o nowych zabiegach. Ekran robi to 200 razy dziennie."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">AW</div>
-            <div>
-              <div class="testimonial-name">Anna Wiśniewska</div>
-              <div class="testimonial-role">Salon beauty, Gdynia</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Testimonials moved earlier -->
 
   <!-- FAQ -->
   <section>
@@ -2738,6 +2974,39 @@
     document.getElementById('contactConsent')?.addEventListener('change', function() {
       clearError('contactConsent', 'consentError');
     });
+
+    // Scroll animations with IntersectionObserver
+    const observeElements = () => {
+      const elements = document.querySelectorAll('.fade-in, .trust-stat, .progress-step');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      elements.forEach(element => {
+        // Set initial state
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        
+        observer.observe(element);
+      });
+    };
+
+    // Initialize scroll animations
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', observeElements);
+    } else {
+      observeElements();
+    }
   </script>
 </body>
 </html>
