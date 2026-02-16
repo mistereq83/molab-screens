@@ -1461,6 +1461,91 @@
       position: relative;
     }
 
+    /* Handwritten CTA */
+    .handwritten-cta {
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .handwritten-cta:hover {
+      transform: scale(1.05);
+    }
+
+    .handwritten-container {
+      position: relative;
+      width: 300px;
+      height: 150px;
+      margin: 0 auto;
+    }
+
+    .handwritten-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .handwritten-path {
+      stroke-dasharray: 2800;
+      stroke-dashoffset: 2800;
+      opacity: 0;
+    }
+
+    .handwritten-path.animate {
+      animation: drawPath 2.5s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards;
+    }
+
+    @keyframes drawPath {
+      0% {
+        opacity: 1;
+        stroke-dashoffset: 2800;
+      }
+      100% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .handwritten-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      text-align: center;
+    }
+
+    .handwritten-title {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 600;
+      color: #ffffff;
+      opacity: 0;
+      font-family: var(--font-main);
+      white-space: nowrap;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .handwritten-title.animate {
+      animation: fadeInText 1s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes fadeInText {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* Footer */
     footer {
       background: #f5f5f5;
@@ -2115,6 +2200,16 @@
         font-size: 1rem;
       }
 
+      /* Handwritten CTA mobile */
+      .handwritten-container {
+        width: 250px;
+        height: 125px;
+      }
+
+      .handwritten-title {
+        font-size: 1.4rem;
+      }
+
       /* Footer */
       footer {
         padding: 2rem 1.5rem;
@@ -2705,9 +2800,32 @@
   <section class="final-cta" id="contact">
     <h2>5 minut. Bez zobowiązań.</h2>
     <p>Pokażemy Ci, jak ekran może pracować w Twoim lokalu. Jeśli to nie dla Ciebie — zero problemu.</p>
-    <button class="btn btn-primary" onclick="openContactModal()">
-      Porozmawiajmy
-    </button>
+    
+    <!-- Handwritten CTA -->
+    <div class="handwritten-cta" onclick="openContactModal()">
+      <div class="handwritten-container">
+        <svg class="handwritten-svg" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="handwrittenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--molab-yellow)" />
+              <stop offset="100%" stop-color="var(--molab-red)" />
+            </linearGradient>
+          </defs>
+          <path 
+            class="handwritten-path" 
+            d="M 950 90 C 1250 300, 1050 480, 600 520 C 250 520, 150 480, 150 300 C 150 120, 350 80, 600 80 C 850 80, 950 180, 950 180" 
+            stroke="url(#handwrittenGradient)" 
+            stroke-width="8" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            fill="none"
+          />
+        </svg>
+        <div class="handwritten-text">
+          <span class="handwritten-title">Porozmawiajmy</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Contact Modal -->
@@ -3006,6 +3124,46 @@
       document.addEventListener('DOMContentLoaded', observeElements);
     } else {
       observeElements();
+    }
+
+    // Handwritten CTA Animation
+    const handwrittenObserver = () => {
+      const handwrittenCTA = document.querySelector('.handwritten-cta');
+      const handwrittenPath = document.querySelector('.handwritten-path');
+      const handwrittenTitle = document.querySelector('.handwritten-title');
+      
+      if (!handwrittenCTA || !handwrittenPath || !handwrittenTitle) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Start SVG path animation
+            setTimeout(() => {
+              handwrittenPath.classList.add('animate');
+            }, 100);
+            
+            // Start text animation
+            setTimeout(() => {
+              handwrittenTitle.classList.add('animate');
+            }, 100);
+            
+            // Unobserve after animation starts
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
+      });
+
+      observer.observe(handwrittenCTA);
+    };
+
+    // Initialize handwritten animation
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handwrittenObserver);
+    } else {
+      handwrittenObserver();
     }
   </script>
 </body>
